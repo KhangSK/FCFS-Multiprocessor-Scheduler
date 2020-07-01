@@ -56,10 +56,9 @@ for i in range(minArri, maxArri + 1):
             for k in range(len(exe)):
                 if exe['CPU ' + str(k + 1)] == A[j]:
                     execute = True
-                    gnt.broken_barh([(exe['CPU ' + str(k + 1)], B[j])], (8 + k * 10, 4), color = colors[count])
+                    gnt.broken_barh([(exe['CPU ' + str(k + 1)], B[j])], (8 + k * 10, 4), color = colors[count % 8])
                     gnt.annotate('Process ' + j, (exe['CPU ' + str(k + 1)] , 10 + 10 * k))
                     exe['CPU ' + str(k + 1)] += B[j]
-                    count += 1
                     break
             if not execute:
                 temp = float("inf")
@@ -72,10 +71,10 @@ for i in range(minArri, maxArri + 1):
                         pos = k
                 if A[j] > exe[index]:
                     exe[index] = A[j] + B[j]
-                    gnt.broken_barh([(A[j], B[j])], (8 + pos * 10, 4), color = colors[count])
+                    gnt.broken_barh([(A[j], B[j])], (8 + pos * 10, 4), color = colors[count % 8])
                     gnt.annotate('Process ' + j, (A[j] , 10 + 10 * pos))
                 else:
-                    gnt.broken_barh([(exe[index], B[j])], (8 + pos * 10, 4), color = colors[count]) 
+                    gnt.broken_barh([(exe[index], B[j])], (8 + pos * 10, 4), color = colors[count % 8]) 
                     gnt.annotate('Process ' + j, (exe[index] , 10 + 10 * pos))         
                     exe[index] += B[j]
                 count += 1
