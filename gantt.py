@@ -1,6 +1,7 @@
 import sys
 import matplotlib.pyplot as plt 
 from cv2 import cv2
+from PIL import Image
   
 # Declaring a figure "gnt" 
 fig, gnt = plt.subplots() 
@@ -85,4 +86,5 @@ gnt.set_xlim(0, maxExe + 1)
 
   
 plt.savefig("gantt1.png") 
+f = Image.open("gantt1.png").show()
 
