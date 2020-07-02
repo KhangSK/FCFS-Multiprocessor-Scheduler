@@ -12,6 +12,7 @@ gnt.set_ylabel('Processor')
 
 f = open('input.txt', 'r')
 numProcessor = int(f.readline())
+turnaroundTime = 0
 
 arrPosition = []
 arrCPU = []
@@ -34,6 +35,7 @@ for i in range(numProcesses):
     B[parts[0]] = int(parts[2])
     if minArri > A[parts[0]]: minArri = A[parts[0]]
     if maxArri < A[parts[0]]: maxArri = A[parts[0]]
+    turnaroundTime += B[parts[0]]
 # Setting Y-axis and X-axis limits 
 
 gnt.set_ylim(0, temp) 
@@ -48,6 +50,8 @@ gnt.grid(True)
 
 colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
 count = 0
+
+waitingTime = 0
 
 for i in range(minArri, maxArri + 1):
     for j in A:
@@ -74,6 +78,7 @@ for i in range(minArri, maxArri + 1):
                     gnt.broken_barh([(A[j], B[j])], (8 + pos * 10, 4), color = colors[count % 8])
                     gnt.annotate('Process ' + j, (A[j] , 10 + 10 * pos))
                 else:
+                    waitingTime += exe[index] - A[j]
                     gnt.broken_barh([(exe[index], B[j])], (8 + pos * 10, 4), color = colors[count % 8]) 
                     gnt.annotate('Process ' + j, (exe[index] , 10 + 10 * pos))         
                     exe[index] += B[j]
@@ -83,6 +88,9 @@ for i in exe:
     if maxExe < exe[i]: maxExe = exe[i]
 gnt.set_xlim(0, maxExe + 1)
 
+turnaroundTime += waitingTime
+print("Waiting time: ", waitingTime)
+print("Turnaround time: ", turnaroundTime)
   
 plt.savefig("gantt1.png") 
 f = Image.open("gantt1.png").show()
